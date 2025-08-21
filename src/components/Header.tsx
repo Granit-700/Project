@@ -1,8 +1,8 @@
 // Erbol
 import { AppBar, Box, Typography } from "@mui/material";
-import headerBg from "../assets/images/header_bg.png"; // твоя волна-фон
+import headerBg from "../assets/images/header_bg.png";
 import headerLogo from "../assets/icons/header_logo.svg";
-import headerBurger from "../assets/icons/header_burger.svg"; // иллюстрация бургера
+import headerBurger from "../assets/icons/header_burger.svg";
 
 const Header = () => {
   return (
@@ -11,26 +11,27 @@ const Header = () => {
       sx={{
         backgroundImage: `url(${headerBg})`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100%",     // полностью вмещает изображение
-        backgroundPosition: "center",  // по центру
+        backgroundSize: "100% 100%",
+        backgroundPosition: "center",
         backgroundColor: "transparent",
         boxShadow: "none",
         height: 466
       }}
     >
-      {/* Логотип */}
-      <Box
-        component="img"
-        src={headerLogo}
-        alt="YourMeal"
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "24px auto"
-        }}
-      />
-      {/* HeroBanner */}
+      <Box component="a" href="http://localhost:5173/"
+        sx={{ margin: "24px auto" }}
+      >
+        <Box
+          component="img"
+          src={headerLogo}
+          alt="YourMeal"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        />
+      </Box>
       <Box
         sx={{
           display: "flex",
@@ -44,7 +45,6 @@ const Header = () => {
             width: 326,
             height: 326,
             padding: "26.74px 36.86px 9.31px 35.73px"
-
           }}
         >
           <Box
@@ -75,13 +75,12 @@ const Header = () => {
                 fontSize: "50px",
                 lineHeight: "120%",
                 letterSpacing: 0,
-                color: "#FF5C00", // нужно выделить цветом
+                color: "#FF5C00",
               }}
             >
               сочные бургеры!
             </Typography>
           </Typography>
-
           <Typography
             component="p"
             sx={{
