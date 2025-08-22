@@ -1,4 +1,3 @@
-// Erbol
 import { AppBar, Box, Typography } from "@mui/material";
 import headerBg from "../assets/images/header_bg.png";
 import headerLogo from "../assets/icons/header_logo.svg";
