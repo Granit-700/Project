@@ -13,6 +13,7 @@ const NavButton = ({ category, isSelected, onSelect }: NavButtonProps) => {
 
   return (
     <Button
+      disableRipple
       onClick={() => onSelect(category.id)}
       className={isSelected ? "selected" : ""}
       // это позже
