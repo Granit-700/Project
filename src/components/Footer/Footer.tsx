@@ -1,20 +1,21 @@
 import { Box, Container, Typography } from "@mui/material";
-import footerLogo from "../assets/icons/footer_logo.svg";
-import phone from "../assets/icons/phone.svg";
-import vkOrange from "../assets/icons/vk-orange.svg";
-import tgOrange from "../assets/icons/tg-orange.svg";
+import footerLogo from "../../assets/icons/footer_logo.svg";
+import phone from "../../assets/icons/phone.svg";
+import vkOrange from "../../assets/icons/vk-orange.svg";
+import tgOrange from "../../assets/icons/tg-orange.svg";
 
 const Footer = () => {
   return (
-    <Box component="footer" >
+    <Box component="footer" marginTop={"100px"} sx={{backgroundColor: "#fff"}}>
       <Container
         disableGutters
+        maxWidth={false}
         sx={{
-          maxWidth: "1231px",
-          padding: "51px 0 40px",
+          maxWidth: "1290px",
+          padding: "51px 136px 40px 0",
           display: "flex",
           flexDirection: "column",
-          gap: "35px"
+          gap: "35px",
         }}
       >
         <Box display="flex" justifyContent={"space-between"} alignItems={"flex-start"} >

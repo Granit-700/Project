@@ -1,14 +1,11 @@
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Nav from "./components/Nav";
+import Layout from "./components/Layout/Layout";
+import Main from "./components/Main/Main";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <Nav />
-      <Footer />
-    </div>
+    <Layout>
+      <Main />
+    </Layout>
   );
 };
 

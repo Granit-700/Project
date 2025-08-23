@@ -1,7 +1,7 @@
 import { AppBar, Box, Typography } from "@mui/material";
-import headerBg from "../assets/images/header_bg.png";
-import headerLogo from "../assets/icons/header_logo.svg";
-import headerBurger from "../assets/icons/header_burger.svg";
+import headerBg from "../../assets/images/header_bg.png"
+import headerLogo from "../../assets/icons/header_logo.svg";
+import headerBurger from "../../assets/icons/header_burger.svg";
 
 const Header = () => {
   return (

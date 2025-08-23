@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import type { Category } from "../types";
+import type { Category } from "../../types";
 // import { Link as RouterLink } from "react-router-dom";
 
 interface NavButtonProps {
@@ -29,15 +29,14 @@ const NavButton = ({ category, isSelected, onSelect }: NavButtonProps) => {
         padding: "8px 14px",
         backgroundColor: "#fff",
         border: " 1px solid #fff",
-        transition: "all 0.1s ease",
         whiteSpace: "nowrap",
-
         "&:hover": {
+          transition: "border 0.2s ease",
           border: "1px solid #F86310",
           backgroundColor: "#fff",
         },
-
         "&.selected": {
+          transition: "none",
           border: " 1px solid #fff",
           backgroundColor: "#FFAB08",
         }
@@ -45,7 +44,9 @@ const NavButton = ({ category, isSelected, onSelect }: NavButtonProps) => {
     >
       <Box
         component="img"
-        src={category.icon}
+        width="24px"
+        height="24px"
+        src={category.image}
       />
       <Typography
         component="span"
@@ -59,7 +60,7 @@ const NavButton = ({ category, isSelected, onSelect }: NavButtonProps) => {
           textTransform: "none"
         }}
       >
-        {category.title}
+        {category.name}
       </Typography>
     </Button>
   );
