@@ -14,15 +14,18 @@ interface State {
 };
 
 interface AuthResponse {
-  access?: string;
-  refresh?: string;
+  access?: string | null;
+  refresh?: string | null;
+  userName?: string | null;
 }
 
 export const useAuthStore = create<State>((set, get) => {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
+  const userName = localStorage.getItem("userName")
+
   return {
-    userName: null,
+    userName,
     email: null,
     accessToken,
     refreshToken,
@@ -56,9 +59,14 @@ export const useAuthStore = create<State>((set, get) => {
               localStorage.setItem("refreshToken", data.refresh);
             } else localStorage.removeItem("refreshToken");
 
+            if (data.username !== null) {
+              localStorage.setItem("userName", data.username);
+            } else localStorage.removeItem("userName");
+
             return {
               accessToken: data.access,
-              refreshToken: data.refresh
+              refreshToken: data.refresh,
+              userName: data.username,
             };
           });
         };
@@ -93,9 +101,14 @@ export const useAuthStore = create<State>((set, get) => {
             localStorage.setItem("refreshToken", data.refresh);
           } else localStorage.removeItem("refreshToken");
 
+          if (data.username !== null) {
+            localStorage.setItem("userName", data.username);
+          } else localStorage.removeItem("userName");
+
           return {
             accessToken: data.access,
-            refreshToken: data.refresh
+            refreshToken: data.refresh,
+            userName: data.username,
           };
         });
       } catch (e: any) {
@@ -104,7 +117,8 @@ export const useAuthStore = create<State>((set, get) => {
       }
     },
     logOut: () => {
-      set({ accessToken: null, refreshToken: null });
+      set({ userName: null, accessToken: null, refreshToken: null });
+      localStorage.removeItem("userName");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     },

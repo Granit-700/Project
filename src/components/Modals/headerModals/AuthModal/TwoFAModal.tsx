@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import { useState } from "react";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "../../../../stores/authStore";
 
 interface TwoFAModalProps {
   isOpen: "SingIn" | "SingUp" | "TwoFA" | false;

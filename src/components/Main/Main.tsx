@@ -1,16 +1,26 @@
 import { Box, Typography } from "@mui/material";
 import ProductCards from "./ProductCard";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import type { Product } from "../../types";
 import { useGetProducts, useProducts } from "../../stores/mainStore";
+import { useSelectedCategory } from "../../stores/navStore";
 
 const Main = () => {
   const getProducts = useGetProducts();
   const products = useProducts();
+  const selectedCategory = useSelectedCategory();
 
   useEffect(() => {
-    getProducts();
+    getProducts(); // загружаем все продукты
   }, []);
+
+  // 🔹 фильтруем продукты локально по выбранной категории
+  const filteredProducts = useMemo(() => {
+    if (!selectedCategory) return products;
+    return products.filter(
+      (product: Product) => product.category.name === selectedCategory
+    );
+  }, [products, selectedCategory]);
 
   return (
     <Box component="main">
@@ -26,7 +36,7 @@ const Main = () => {
             marginBottom: "24px"
           }}
         >
-          {"Бургеры"}
+          {selectedCategory}
         </Typography>
         <Box
           sx={{
@@ -35,7 +45,7 @@ const Main = () => {
             gap: "30px"
           }}
         >
-          {products.map((product: Product) => (
+          {filteredProducts.map((product: Product) => (
             <ProductCards
               key={product.id}
               product={product}

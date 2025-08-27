@@ -8,7 +8,7 @@ import {
   Box,
 } from "@mui/material";
 import { useState } from "react";
-import { useIsAuth, useSignIn } from "../../stores/authStore";
+import { useSignIn } from "../../../../stores/authStore";
 
 interface SignInModalProps {
   isOpen: "SingIn" | "SingUp" | "TwoFA" | false;

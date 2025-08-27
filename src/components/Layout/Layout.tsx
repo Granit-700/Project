@@ -17,7 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
       <Box>
         <Container
           disableGutters maxWidth={false}
-          sx={{ display: "flex", maxWidth: "1290px" }}
+          sx={{ display: "flex", maxWidth: "1290px", alignItems: "flex-start" }}
         >
           <SideBar />
           {children}

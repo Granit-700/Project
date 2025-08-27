@@ -1,15 +1,15 @@
 import { Container, Stack } from "@mui/material";
 import NavButton from "./NavButton";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Category } from "../../types";
-import { useCategories, useGetCategories } from "../../stores/navStore";
+import { useCategories, useGetCategories, useSelectedCategory, useSetSelectedCategory } from "../../stores/navStore";
 
 const Nav = () => {
-  const [selectedCategory, setSelectedCategory] = useState<number>(1);
-
   const getCategories = useGetCategories();
   const categories = useCategories();
-  console.log(categories);
+  const selectedCategory = useSelectedCategory();
+  const setSelectedCategory = useSetSelectedCategory();
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -25,12 +25,12 @@ const Nav = () => {
           maxWidth: "1290px"
         }}
       >
-        {categories && categories.map((category: Category) => (
+        {categories.map((category: Category) => (
           <NavButton
             key={category.id}
             category={category}
-            isSelected={category.id === selectedCategory}
-            onSelect={() => setSelectedCategory(category.id)}
+            isSelected={category.name === selectedCategory}
+            onSelect={() => setSelectedCategory(category.name)}
           />
         ))}
       </Container>

@@ -3,11 +3,11 @@ import headerBg from "../../assets/images/header_bg.png";
 import headerLogo from "../../assets/icons/header_logo.svg";
 import headerBurger from "../../assets/icons/header_burger.svg";
 import { useState } from "react";
-import SignUpModal from "../Auth/SignUpModal";
-import SignInModal from "../Auth/SignInModal";
-import TwoFAModal from "../Auth/TwoFAModal";
-import { useAccessToken, useIsAuth, useLogOut, useUserName } from "../../stores/authStore";
-import Profile from "./Profile/profile";
+import SignUpModal from "../Modals/headerModals/AuthModal/SignUpModal";
+import SignInModal from "../Modals/headerModals/AuthModal/SignInModal";
+import TwoFAModal from "../Modals/headerModals/AuthModal/TwoFAModal";
+import { useIsAuth, useLogOut, useUserName } from "../../stores/authStore";
+import Profile from "../Modals/headerModals/ProfileModals/ProfileModal";
 
 const Header = () => {
 
@@ -26,13 +26,8 @@ const Header = () => {
 
 
   const isAuth = useIsAuth();
-  const accessToken = useAccessToken();
   const userName = useUserName();
   const logOut = useLogOut();
-
-  console.log(isAuth)
-  console.log(accessToken)
-
 
   return (
     <AppBar
@@ -93,6 +88,14 @@ const Header = () => {
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom", // от нижней границы аватара
+                  horizontal: "right", // справа от аватара
+                }}
+                transformOrigin={{
+                  vertical: "top", // меню будет начинаться сверху
+                  horizontal: "right", // выравнивание по правому краю
+                }}
               >
                 <MenuItem onClick={() => { setIsOpen("Profile") }}>Профиль</MenuItem>
                 <MenuItem onClick={() => { }}>Настройки</MenuItem>
