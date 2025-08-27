@@ -13,7 +13,7 @@ export const useProductStore = create<State>((set) => {
     getProducts: async () => {
       try {
         const { data: { products } } = await axios.get(
-          "https://erjanhoo.pythonanywhere.com/api/product/main-page/"
+          "https://erjanhoo.pythonanywhere.com/api/product/main_page"
         );
         console.log(products);
         set({

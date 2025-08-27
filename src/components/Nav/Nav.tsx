@@ -9,7 +9,7 @@ const Nav = () => {
 
   const getCategories = useGetCategories();
   const categories = useCategories();
-
+  console.log(categories);
   useEffect(() => {
     getCategories();
   }, []);

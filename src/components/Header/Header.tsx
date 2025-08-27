@@ -1,9 +1,39 @@
-import { AppBar, Box, Typography } from "@mui/material";
-import headerBg from "../../assets/images/header_bg.png"
+import { AppBar, Box, Typography, Container, Button, Avatar, Menu, MenuItem } from "@mui/material";
+import headerBg from "../../assets/images/header_bg.png";
 import headerLogo from "../../assets/icons/header_logo.svg";
 import headerBurger from "../../assets/icons/header_burger.svg";
+import { useState } from "react";
+import SignUpModal from "../Auth/SignUpModal";
+import SignInModal from "../Auth/SignInModal";
+import TwoFAModal from "../Auth/TwoFAModal";
+import { useAccessToken, useIsAuth, useLogOut, useUserName } from "../../stores/authStore";
+import Profile from "./Profile/profile";
 
 const Header = () => {
+
+  const [isOpen, setIsOpen] = useState<"Profile" | "SingIn" | "SingUp" | "TwoFA" | false>(false);
+
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+  const isAuth = useIsAuth();
+  const accessToken = useAccessToken();
+  const userName = useUserName();
+  const logOut = useLogOut();
+
+  console.log(isAuth)
+  console.log(accessToken)
+
+
   return (
     <AppBar
       position="static"
@@ -14,101 +44,161 @@ const Header = () => {
         backgroundPosition: "center",
         backgroundColor: "transparent",
         boxShadow: "none",
-        height: 466
+        height: 497,
       }}
     >
-      <Box component="a" href="http://localhost:5173/"
-        sx={{ margin: "24px auto" }}
-      >
-        <Box
-          component="img"
-          src={headerLogo}
-          alt="YourMeal"
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        />
-      </Box>
-      <Box
+
+      {isOpen === "SingUp" ? <SignUpModal isOpen={isOpen} setIsOpen={setIsOpen} /> : null}
+      {isOpen === "SingIn" ? <SignInModal isOpen={isOpen} setIsOpen={setIsOpen} /> : null}
+      {isOpen === "TwoFA" ? <TwoFAModal isOpen={isOpen} setIsOpen={setIsOpen} /> : null}
+      {isOpen === "Profile" ? <Profile isOpen={isOpen} setIsOpen={setIsOpen} /> : null}
+
+      <Container
+        disableGutters
+        maxWidth={false}
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "21px"
+          width: "1290px",
         }}
       >
+
+        {/* Верхняя панель: логотип + профиль / кнопки */}
         <Box
           sx={{
-            width: 326,
-            height: 326,
-            padding: "26.74px 36.86px 9.31px 35.73px"
+            margin: "24px auto",
+            px: 4,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "relative",
+          }}
+        >
+          {/* Логотип */}
+          <Box component="a" href="/">
+            <Box
+              component="img"
+              src={headerLogo}
+              alt="YourMeal"
+              sx={{ height: 40 }}
+            />
+          </Box>
+
+          {isAuth ? (
+            <Box sx={{ position: "absolute", right: 0 }}>
+              <Avatar
+                sx={{ width: 40, height: 40, cursor: "pointer" }}
+                onClick={handleOpen}
+              />
+
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={() => { setIsOpen("Profile") }}>Профиль</MenuItem>
+                <MenuItem onClick={() => { }}>Настройки</MenuItem>
+                <MenuItem onClick={() => { }}>Пополнить баланс</MenuItem>
+                <MenuItem onClick={() => logOut()}>Выйти из аккаунта</MenuItem>
+                <p style={{ textAlign: "center" }}>{`${userName}`}</p>
+              </Menu>
+            </Box>
+          ) : (
+            <Box sx={{ position: "absolute", right: 0, display: "flex", gap: 2 }}>
+              <button onClick={() => setIsOpen("TwoFA")}>
+                открыть 2FA
+              </button>
+              <Button
+                onClick={() => setIsOpen("SingIn")}
+                variant="outlined" color="inherit">
+                Sign In
+              </Button>
+              <Button
+                onClick={() => setIsOpen("SingUp")}
+                variant="outlined"
+                color="inherit"
+                sx={{
+                  backgroundColor: "#fff",
+                  color: "#FFAB08",
+                }}
+              >
+                Sign Up
+              </Button>
+            </Box>
+          )}
+
+        </Box>
+
+        {/* Контент хедера (бургер + текст) */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "21px",
           }}
         >
           <Box
-            component="img"
-            src={headerBurger}
-            alt="Burger"
-          />
-        </Box>
-        <Box sx={{ maxWidth: 500 }}>
-          <Typography
-            component="h1"
             sx={{
-              fontFamily: "Nunito",
-              fontWeight: "800",
-              fontSize: "50px",
-              lineHeight: "120%",
-              letterSpacing: "0",
-              marginBottom: "54px",
-              color: "#fff"
+              width: 326,
+              height: 326,
+              padding: "26.74px 36.86px 9.31px 35.73px",
             }}
           >
-            Только самые{" "}
+            <Box component="img" src={headerBurger} alt="Burger" />
+          </Box>
+          <Box sx={{ maxWidth: 500 }}>
             <Typography
-              component="span"
+              component="h1"
               sx={{
                 fontFamily: "Nunito",
-                fontWeight: 800,
+                fontWeight: "800",
                 fontSize: "50px",
                 lineHeight: "120%",
-                letterSpacing: 0,
-                color: "#FF5C00",
+                marginBottom: "54px",
+                color: "#fff",
               }}
             >
-              сочные бургеры!
+              Только самые{" "}
+              <Typography
+                component="span"
+                sx={{
+                  fontFamily: "Nunito",
+                  fontWeight: 800,
+                  fontSize: "50px",
+                  lineHeight: "120%",
+                  color: "#FF5C00",
+                }}
+              >
+                сочные бургеры!
+              </Typography>
             </Typography>
-          </Typography>
-          <Typography
-            component="p"
-            sx={{
-              fontFamily: "Nunito",
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "100%",
-              letterSpacing: 0,
-              color: "#fff"
-            }}
-          >
-            Бесплатная доставка от{" "}
             <Typography
-              component="span"
+              component="p"
               sx={{
                 fontFamily: "Nunito",
-                fontWeight: 600,
+                fontWeight: 400,
                 fontSize: "16px",
                 lineHeight: "100%",
-                letterSpacing: 0,
-                color: "#fff"
+                color: "#fff",
               }}
             >
-              599₽
+              Бесплатная доставка от{" "}
+              <Typography
+                component="span"
+                sx={{
+                  fontFamily: "Nunito",
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  lineHeight: "100%",
+                  color: "#fff",
+                }}
+              >
+                599₽
+              </Typography>
             </Typography>
-          </Typography>
+          </Box>
         </Box>
-      </Box>
-    </AppBar >
+      </Container>
+    </AppBar>
   );
 };
 

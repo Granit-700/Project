@@ -11,7 +11,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <Box>
+    <>
       <Header />
       <Nav />
       <Box>
@@ -24,7 +24,7 @@ const Layout = ({ children }: LayoutProps) => {
         </Container>
       </Box>
       <Footer />
-    </Box>
+    </>
   );
 };
 

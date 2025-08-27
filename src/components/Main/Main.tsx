@@ -26,7 +26,7 @@ const Main = () => {
             marginBottom: "24px"
           }}
         >
-          Бургеры
+          {"Бургеры"}
         </Typography>
         <Box
           sx={{

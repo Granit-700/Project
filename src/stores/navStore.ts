@@ -13,7 +13,7 @@ export const useCategoryStore = create<State>((set) => {
     getCategories: async () => {
       try {
         const { data: { categories } } = await axios.get(
-          "https://erjanhoo.pythonanywhere.com/api/product/main-page/"
+          "https://erjanhoo.pythonanywhere.com/api/product/main_page"
         );
         console.log(categories);
         set({
