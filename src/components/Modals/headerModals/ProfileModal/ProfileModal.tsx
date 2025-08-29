@@ -7,7 +7,7 @@ interface ProfileProps {
 
 const Profile = ({isOpen, setIsOpen}: ProfileProps) => {
   return (
-    <Dialog open={Boolean(isOpen)}>
+    <Dialog open={Boolean(isOpen)} onClose={() => setIsOpen(false)}>
       <DialogTitle>Модалка</DialogTitle>
       <DialogContent>
         Здесь можно разместить любой контент.

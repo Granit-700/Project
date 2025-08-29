@@ -1,6 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
 import type { Category } from "../../types";
-// import { Link as RouterLink } from "react-router-dom";
 
 interface NavButtonProps {
   category: Category;
@@ -16,9 +15,6 @@ const NavButton = ({ category, isSelected, onSelect }: NavButtonProps) => {
       disableRipple
       onClick={() => onSelect(category.id)}
       className={isSelected ? "selected" : ""}
-      // это позже
-      // component={RouterLink}
-      // to="/"
 
       sx={{
         display: "flex",

@@ -30,7 +30,7 @@ const ProductDetailModal = ({ isOpen, setIsOpen, product, setSelectedProduct }: 
         <Box component="img" src={product.image} alt={product.name} width="276px" height="220px" borderRadius="16px" />
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="primary">Добавить в корзину</Button>
+        <Button disabled variant="contained" color="primary">Добавить в корзину</Button>
       </DialogActions>
     </Dialog>
   );

@@ -5,7 +5,7 @@ import { useState } from "react";
 import SignUpModal from "./components/Modals/headerModals/AuthModal/SignUpModal";
 import SignInModal from "./components/Modals/headerModals/AuthModal/SignInModal";
 import TwoFAModal from "./components/Modals/headerModals/AuthModal/TwoFAModal";
-import Profile from "./components/Modals/headerModals/ProfileModals/ProfileModal";
+import Profile from "./components/Modals/headerModals/ProfileModal/ProfileModal";
 import ProductDetailModal from "./components/Modals/ProductDetailsModals/ProductDetailModal";
 import type { Product } from "./types";
 

@@ -15,9 +15,7 @@ const ProductCards = ({ setIsOpen, product, setSelectedProduct }: ProductCardsPr
     <Card elevation={0} sx={{ p: "12px", borderRadius: "18px" }}>
       <CardActionArea
         disableRipple
-        onClick={(e) => {
-          // Если у родителя есть onClick, защитимся
-          e.stopPropagation();
+        onClick={() => {
           setSelectedProduct(product)
           setIsOpen("ProductDetails");
         }}

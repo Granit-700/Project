@@ -1,6 +1,6 @@
 import { AppBar, Box, Typography, Container, Button, Avatar, Menu, MenuItem } from "@mui/material";
 import headerBg from "../../assets/images/header_bg.png";
-import headerCustomLogo from "../../assets/icons/header_custom_logo.svg";
+import headerLogo from "../../assets/icons/header_logo.svg";
 import headerBurger from "../../assets/icons/header_burger.svg";
 import { useState } from "react";
 import { useIsAuth, useLogOut, useUserName } from "../../stores/authStore";
@@ -11,7 +11,7 @@ interface HeaderProps {
   setTwoFAMode: (mode: "login" | "registration") => void;
 }
 
-const Header = ({ isOpen, setIsOpen, setTwoFAMode }: HeaderProps) => {
+const Header = ({ setIsOpen, setTwoFAMode }: HeaderProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
@@ -47,7 +47,7 @@ const Header = ({ isOpen, setIsOpen, setTwoFAMode }: HeaderProps) => {
           }}
         >
           <Box component="a" href="/">
-            <Box component="img" src={headerCustomLogo} alt="YourMeal" sx={{ height: 40 }} />
+            <Box component="img" src={headerLogo} alt="YourMeal" sx={{ height: 40 }} />
           </Box>
 
           {isAuth ? (
@@ -61,19 +61,14 @@ const Header = ({ isOpen, setIsOpen, setTwoFAMode }: HeaderProps) => {
                 transformOrigin={{ vertical: "top", horizontal: "right" }}
               >
                 <MenuItem onClick={() => setIsOpen("Profile")}>Профиль</MenuItem>
-                <MenuItem onClick={() => { }}>Настройки</MenuItem>
-                <MenuItem onClick={() => { }}>Пополнить баланс</MenuItem>
+                <MenuItem disabled onClick={() => { }}>Настройки</MenuItem>
+                <MenuItem disabled onClick={() => { }}>Пополнить баланс</MenuItem>
                 <MenuItem onClick={() => logOut()}>Выйти из аккаунта</MenuItem>
                 <p style={{ textAlign: "center" }}>{userName}</p>
               </Menu>
             </Box>
           ) : (
             <Box sx={{ position: "absolute", right: 0, display: "flex", gap: 2 }}>
-              {/* не трогать но потом удалить */}
-              <button onClick={() => setIsOpen("TwoFA")}>
-                открыть 2FA
-              </button>
-              {/* не трогать но потом удалить */}
               <Button
                 onClick={() => { setTwoFAMode("login"); setIsOpen("SignIn"); }}
                 variant="outlined"
