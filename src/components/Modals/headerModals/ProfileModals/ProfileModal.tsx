@@ -1,8 +1,8 @@
 import {  Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
 
 interface ProfileProps {
-  isOpen: "Profile" | "SingIn" | "SingUp" | "TwoFA" | false;
-  setIsOpen: (value: "Profile" | "SingIn" | "SingUp" | "TwoFA" | false) => void;
+  isOpen: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false;
+  setIsOpen: (value: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false) => void;
 }
 
 const Profile = ({isOpen, setIsOpen}: ProfileProps) => {

@@ -11,8 +11,8 @@ import { useState } from "react";
 import { useSignIn } from "../../../../stores/authStore";
 
 interface SignInModalProps {
-  isOpen: "SingIn" | "SingUp" | "TwoFA" | false;
-  setIsOpen: (value: "SingIn" | "SingUp" | "TwoFA" | false) => void;
+  isOpen: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false;
+  setIsOpen: (value: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false) => void;
 }
 
 interface Errors {
@@ -24,7 +24,6 @@ interface Errors {
 const SignInModal = ({ isOpen, setIsOpen }: SignInModalProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const signIn = useSignIn();
 
   const [errors, setErrors] = useState<Errors>({
@@ -33,7 +32,7 @@ const SignInModal = ({ isOpen, setIsOpen }: SignInModalProps) => {
     passwordMinLengthError: null,
   });
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const newErrors: Errors = {
       emailRequiredError: !email ? "Email обязательное поле" : null,
       passwordRequiredError: !password ? "Password обязательное поле" : null,
@@ -41,17 +40,14 @@ const SignInModal = ({ isOpen, setIsOpen }: SignInModalProps) => {
     };
 
     setErrors(newErrors);
+    if (Object.values(newErrors).some(e => e !== null)) return;
 
-    const hasError = Object.values(newErrors).some((error) => error !== null);
-    if (hasError) return;
-
-    signIn({ email, password })
-      .then((data) => {
-        console.log(data.access);
-        if (data.access) {
-          setIsOpen(false);
-        } else setIsOpen("TwoFA");
-      });
+    const data = await signIn({ email, password });
+    if (data.access) {
+      setIsOpen(false);
+    } else if (data.requires2FA) {
+      setIsOpen("TwoFA");
+    }
   };
 
   return (
@@ -91,18 +87,8 @@ const SignInModal = ({ isOpen, setIsOpen }: SignInModalProps) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={() => setIsOpen(false)}
-          sx={{ border: "1px solid #FFAB08", color: "#FFAB08" }}
-        >
-          Отмена
-        </Button>
-        <Button
-          onClick={handleClick}
-          sx={{ backgroundColor: "#FFAB08", color: "#fff" }}
-        >
-          Sign In
-        </Button>
+        <Button onClick={() => setIsOpen(false)} sx={{ border: "1px solid #FFAB08", color: "#FFAB08" }}>Отмена</Button>
+        <Button onClick={handleClick} sx={{ backgroundColor: "#FFAB08", color: "#fff" }}>Sign In</Button>
       </DialogActions>
     </Dialog>
   );

@@ -6,13 +6,16 @@ import Footer from "../Footer/Footer";
 
 interface LayoutProps {
   children: React.ReactNode;
+  isOpen: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false;
+  setIsOpen: (value: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false) => void;
+  setTwoFAMode: (value: "login" | "registration" | false) => void;
 };
 
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, isOpen, setIsOpen, setTwoFAMode }: LayoutProps) => {
   return (
     <>
-      <Header />
+      <Header setTwoFAMode={setTwoFAMode} isOpen={isOpen} setIsOpen={setIsOpen} />
       <Nav />
       <Box>
         <Container

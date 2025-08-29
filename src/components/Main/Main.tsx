@@ -5,7 +5,12 @@ import type { Product } from "../../types";
 import { useGetProducts, useProducts } from "../../stores/mainStore";
 import { useSelectedCategory } from "../../stores/navStore";
 
-const Main = () => {
+interface MainProps {
+  setIsOpen: (value: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false) => void;
+  setSelectedProduct: (product: Product | null) => void;
+};
+
+const Main = ({ setIsOpen, setSelectedProduct }: MainProps) => {
   const getProducts = useGetProducts();
   const products = useProducts();
   const selectedCategory = useSelectedCategory();
@@ -49,6 +54,8 @@ const Main = () => {
             <ProductCards
               key={product.id}
               product={product}
+              setIsOpen={setIsOpen}
+              setSelectedProduct={setSelectedProduct}
             />
           ))}
         </Box>

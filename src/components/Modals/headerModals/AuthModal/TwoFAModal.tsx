@@ -1,33 +1,34 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import { useState } from "react";
-import { useAuthStore } from "../../../../stores/authStore";
+import { useVerifyLogin2FA, useVerifyRegistration2FA } from "../../../../stores/authStore";
 
 interface TwoFAModalProps {
-  isOpen: "SingIn" | "SingUp" | "TwoFA" | false;
-  setIsOpen: (value: "SingIn" | "SingUp" | "TwoFA" | false) => void;
-};
+  isOpen: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false;
+  setIsOpen: (value: "ProductDetails" | "Profile" | "SignIn" | "SignUp" | "TwoFA" | false) => void;
+  mode: "login" | "registration" | false;
+}
 
-const TwoFAModal = ({ isOpen, setIsOpen }: TwoFAModalProps) => {
-
+const TwoFAModal = ({ isOpen, setIsOpen, mode }: TwoFAModalProps) => {
   const [code, setCode] = useState("");
-
-  const { twoFA } = useAuthStore();
+  const verifyLogin2FA = useVerifyLogin2FA();
+  const verifyRegistration2FA = useVerifyRegistration2FA();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const onlyNums = e.target.value.replace(/\D/g, "");
     setCode(onlyNums.slice(0, 6));
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    if (!code || code.length !== 6) return;
 
-    if (!code) return;
-    if (code.length !== 6) return;
+    const fn = mode === "login" ? verifyLogin2FA : verifyRegistration2FA;
 
-    twoFA(code)
-      .then(() => setIsOpen(false)) // закроется только если код верный
-      .catch(err => {
-        console.log(err.message); // можно показать ошибку пользователю
-      });
+    try {
+      await fn(code);
+      setIsOpen(false);
+    } catch (err: any) {
+      console.log(err.message);
+    }
   }
 
   return (
@@ -47,36 +48,15 @@ const TwoFAModal = ({ isOpen, setIsOpen }: TwoFAModalProps) => {
             style: { letterSpacing: "8px", textAlign: "center", fontSize: "20px" },
           }}
           error={code.length > 0 && code.length < 6}
-          helperText={
-            code.length > 0 && code.length < 6
-              ? "Введите ровно 6 цифр"
-              : " "
-          }
+          helperText={code.length > 0 && code.length < 6 ? "Введите ровно 6 цифр" : " "}
           sx={{
-            "& .MuiOutlinedInput-root": {
-              "&.Mui-focused fieldset": {
-                borderColor: "#FF5C00", // твой цвет рамки в фокусе
-              },
-            },
-            "& .MuiInputLabel-root": {
-              "&.Mui-focused": {
-                color: "#FF5C00", // цвет label в фокусе
-              },
-            },
+            "& .MuiOutlinedInput-root": { "&.Mui-focused fieldset": { borderColor: "#FF5C00" } },
+            "& .MuiInputLabel-root": { "&.Mui-focused": { color: "#FF5C00" } },
           }}
         />
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={handleClick}
-          sx={{
-            backgroundColor: "#FFAB08",
-            color: "#FFFFFF",
-            borderRadius: '4px',
-          }}
-        >
-          Подтвердить
-        </Button>
+        <Button onClick={handleClick} sx={{ backgroundColor: "#FFAB08", color: "#FFFFFF", borderRadius: '4px' }}>Подтвердить</Button>
       </DialogActions>
     </Dialog>
   );
